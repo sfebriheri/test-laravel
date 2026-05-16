@@ -1,87 +1,78 @@
-# Test Laravel - Courier Management System
+# Laravel Developer Technical Assessment
 
-This project is a technical assessment implementation for a Courier Management System built with Laravel 11. It provides a RESTful API for managing courier master data with advanced filtering, searching, and sorting capabilities.
+This repository contains the implementation of a technical assessment for a Laravel Developer position. The task involves creating a standalone API module for managing **Courier Master Data** with specific functional requirements.
 
-## Technical Specifications
+## 🚀 Overview
 
-### 1. Courier Master Data
-- **Fields**: `id`, `name`, `email` (unique), `phone_number`, `level` (1-5), `vehicle_type`, `is_active`.
-- **Level**: Supports tiers from 1 to 5.
+The project provides a robust RESTful API built with **Laravel 11**, designed to handle courier management with features such as multi-term search, level-based filtering, and dynamic sorting.
 
-### 2. Features & API Endpoints
-- **CRUD Operations**: Complete Create, Read, Update, and Delete functionality.
-- **Advanced Listing (`index`)**:
-  - **Pagination**: Built-in response pagination.
-  - **Search**: Search by name (supports partial and multi-term matches, e.g., `?search=budi+agung`).
-  - **Level Filtering**: Filter by specific levels (e.g., `?level=2,3`).
-  - **Sorting**: Default sort by name. Optional override to sort by registration date (`?sort=date`).
-- **Show**: Retrieve full details of a single courier.
-- **Validation**: Comprehensive input validation for Store and Update requests.
+## 🛠 Technical Stack
+- **Framework**: Laravel 11.x
+- **Language**: PHP 8.2+
+- **Database**: SQLite (Automated setup)
+- **Testing**: PHPUnit / Laravel Feature Testing
 
-### 3. Requirements
-- PHP 8.2+
-- Composer
-- SQLite (configured by default for easy testing)
+## 📋 Features & Implementation Details
 
-## Installation
+### 1. Courier Module (Master Data)
+The `Courier` model handles the following attributes:
+- `name`: Full name of the courier.
+- `email`: Unique email address.
+- `phone_number`: Contact number.
+- `level`: Experience level (Scale 1-5).
+- `vehicle_type`: Assigned vehicle.
+- `is_active`: Status flag.
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/sfebriheri/test-laravel.git
-   cd test-laravel
-   ```
+### 2. API Endpoints
 
-2. **Install dependencies**:
-   ```bash
-   composer install
-   ```
-
-3. **Configure Environment**:
-   ```bash
-   cp .env.example .env
-   php artisan key:generate
-   ```
-
-4. **Setup Database (SQLite)**:
-   ```bash
-   touch database/database.sqlite
-   php artisan migrate
-   ```
-
-## Usage
-
-### API Reference
-
-| Method | Endpoint | Description |
+| Endpoint | Method | Features |
 | :--- | :--- | :--- |
-| `GET` | `/api/couriers` | List couriers with search, filter, and sort |
-| `GET` | `/api/couriers/{id}` | Get courier details |
-| `POST` | `/api/couriers` | Create new courier |
-| `PUT` | `/api/couriers/{id}` | Update courier data |
-| `DELETE` | `/api/couriers/{id}` | Delete a courier |
+| `GET /api/couriers` | Index | Pagination, Multi-term Search, Level Filtering, Sorting |
+| `POST /api/couriers` | Store | Validation (Required fields, unique email, level range) |
+| `GET /api/couriers/{id}` | Show | Detailed view of a single courier |
+| `PUT /api/couriers/{id}` | Update | Partial/Full update with unique email validation |
+| `DELETE /api/couriers/{id}` | Destroy | Soft/Hard deletion verification |
 
-#### Query Parameters for `GET /api/couriers`
-- `search`: Search name (e.g., `?search=budiono`)
-- `level`: Level filter (e.g., `?level=2,3`)
-- `sort`: `name` (default) or `date`
-- `direction`: `asc` or `desc`
+### 3. Advanced Query Capabilities
+- **Search**: Supports multi-word matching (e.g., `?search=budi+agung` matches "Budiono Hadi Agung").
+- **Filtering**: Level-based filtering via comma-separated values (e.g., `?level=2,3`).
+- **Sorting**: Defaults to `name` ascending. Can be overridden using `?sort=date` for registration date.
 
-## Testing
+## 🚦 Getting Started
 
-The project is fully covered by automated Feature Tests.
+### Installation
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/sfebriheri/test-laravel.git
+cd test-laravel
+
+# 2. Install PHP dependencies
+composer install
+
+# 3. Environment setup
+cp .env.example .env
+php artisan key:generate
+
+# 4. Database initialization
+touch database/database.sqlite
+php artisan migrate
+```
+
+### Running Tests
+A comprehensive suite of feature tests ensures the reliability of the CRUD operations and search/filter logic.
 ```bash
 php artisan test
 ```
 
-Tests include:
-- Successful CRUD operations.
-- Verification of data persistence and deletion.
-- Search logic validation.
-- Filtering and sorting accuracy.
-- Validation error handling.
+## 🧪 Testing Coverage
+- **Persistence**: Verification that data is correctly stored and removed from the database.
+- **Validation**: Testing of input rules (required, unique, min/max).
+- **Logic**: Verification of search term splitting and level filtering logic.
+- **Pagination**: Ensuring the response structure adheres to standard pagination formats.
 
-## Standards Followed
-- RESTful API design.
-- PSR-12 Coding Standards.
-- Laravel Best Practices (Form Requests, Model Factories, Mass Assignment Protection).
-- Feature-driven testing approach.
+## 📄 Standards & Best Practices
+- **Form Requests**: Used for clean controller logic and robust validation.
+- **Model Factories**: Implemented for consistent test data generation.
+- **RESTful Principles**: Adherence to standard HTTP methods and status codes.
+- **DRY Principle**: Shared logic encapsulated within the model and requests.
