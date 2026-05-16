@@ -1,88 +1,87 @@
-# Courier Management API
+# Test Laravel - Courier Management System
 
-Simple Laravel API for managing Courier master data.
+This project is a technical assessment implementation for a Courier Management System built with Laravel 11. It provides a RESTful API for managing courier master data with advanced filtering, searching, and sorting capabilities.
 
-## Features
-- CRUD operations for Courier.
-- Pagination for index.
-- Search by name (supports partial/multi-term match).
-- Filter by level (1-5).
-- Sort by name (default) or date created.
-- Comprehensive Feature Tests.
+## Technical Specifications
 
-## Requirements
+### 1. Courier Master Data
+- **Fields**: `id`, `name`, `email` (unique), `phone_number`, `level` (1-5), `vehicle_type`, `is_active`.
+- **Level**: Supports tiers from 1 to 5.
+
+### 2. Features & API Endpoints
+- **CRUD Operations**: Complete Create, Read, Update, and Delete functionality.
+- **Advanced Listing (`index`)**:
+  - **Pagination**: Built-in response pagination.
+  - **Search**: Search by name (supports partial and multi-term matches, e.g., `?search=budi+agung`).
+  - **Level Filtering**: Filter by specific levels (e.g., `?level=2,3`).
+  - **Sorting**: Default sort by name. Optional override to sort by registration date (`?sort=date`).
+- **Show**: Retrieve full details of a single courier.
+- **Validation**: Comprehensive input validation for Store and Update requests.
+
+### 3. Requirements
 - PHP 8.2+
 - Composer
-- SQLite (default)
+- SQLite (configured by default for easy testing)
 
 ## Installation
 
-1. Clone the repository:
+1. **Clone the repository**:
    ```bash
-   git clone https://github.com/sfebriheri/laravel-courier-crud.git
-   cd laravel-courier-crud
+   git clone https://github.com/sfebriheri/test-laravel.git
+   cd test-laravel
    ```
 
-2. Install dependencies:
+2. **Install dependencies**:
    ```bash
    composer install
    ```
 
-3. Setup environment:
+3. **Configure Environment**:
    ```bash
    cp .env.example .env
    php artisan key:generate
    ```
 
-4. Run migrations:
+4. **Setup Database (SQLite)**:
    ```bash
    touch database/database.sqlite
    php artisan migrate
    ```
 
-5. Run tests:
-   ```bash
-   php artisan test
-   ```
+## Usage
 
-## API Endpoints
+### API Reference
 
-### 1. List Couriers
-`GET /api/couriers`
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/couriers` | List couriers with search, filter, and sort |
+| `GET` | `/api/couriers/{id}` | Get courier details |
+| `POST` | `/api/couriers` | Create new courier |
+| `PUT` | `/api/couriers/{id}` | Update courier data |
+| `DELETE` | `/api/couriers/{id}` | Delete a courier |
 
-**Parameters:**
-- `search`: Search by name (e.g., `?search=budi+agung`)
-- `level`: Filter by level (e.g., `?level=1,2,3`)
-- `sort`: Sort field (`name` or `date`)
+#### Query Parameters for `GET /api/couriers`
+- `search`: Search name (e.g., `?search=budiono`)
+- `level`: Level filter (e.g., `?level=2,3`)
+- `sort`: `name` (default) or `date`
 - `direction`: `asc` or `desc`
-- `per_page`: Pagination size (default 10)
-
-### 2. Show Courier
-`GET /api/couriers/{id}`
-
-### 3. Store Courier
-`POST /api/couriers`
-
-**Body:**
-```json
-{
-    "name": "Budiono Hadi Agung",
-    "email": "budi@example.com",
-    "phone_number": "08123456789",
-    "level": 3,
-    "vehicle_type": "Motorcycle"
-}
-```
-
-### 4. Update Courier
-`PUT/PATCH /api/couriers/{id}`
-
-### 5. Delete Courier
-`DELETE /api/couriers/{id}`
 
 ## Testing
-The project includes feature tests covering all CRUD operations and query logic. Run them using:
+
+The project is fully covered by automated Feature Tests.
 ```bash
 php artisan test
 ```
-# test-laravel
+
+Tests include:
+- Successful CRUD operations.
+- Verification of data persistence and deletion.
+- Search logic validation.
+- Filtering and sorting accuracy.
+- Validation error handling.
+
+## Standards Followed
+- RESTful API design.
+- PSR-12 Coding Standards.
+- Laravel Best Practices (Form Requests, Model Factories, Mass Assignment Protection).
+- Feature-driven testing approach.
